@@ -1,17 +1,13 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Driver, Client & Angkot API",
+    "title": "Goang API",
     "description": "API for managing driver and client registration, login, profile, logout, driver status updates, and retrieving Angkot data.",
-    "version": "2"
+    "version": "1"
   },
   "servers": [
     {
-      "url": "https://virtserver.swaggerhub.com/goang/GOANG-API/2",
-      "description": "SwaggerHub API Auto Mocking"
-    },
-    {
-      "url": "/",
+      "url": "http://localhost:3000/api",
       "description": "Development server"
     }
   ],
@@ -38,7 +34,6 @@
         "summary": "Register a new driver",
         "operationId": "registerDriver",
         "requestBody": {
-          "description": "Driver registration details including assigned Angkot number",
           "content": {
             "application/json": {
               "schema": {
@@ -65,6 +60,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse400DriverRegister"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse409DriverRegister"
                 }
               }
             }
@@ -499,13 +504,13 @@
       "DriverRegisterRequest": {
         "required": [
           "email",
-          "name",
-          "noAngkot",
+          "username",
+          "route",
           "password"
         ],
         "type": "object",
         "properties": {
-          "name": {
+          "username": {
             "type": "string",
             "example": "Budi Santoso"
           },
@@ -519,9 +524,9 @@
             "format": "password",
             "example": "strongpassword123"
           },
-          "noAngkot": {
+          "route": {
             "type": "string",
-            "example": "D05"
+            "example": "05"
           }
         }
       },
@@ -573,6 +578,20 @@
         "properties": {
           "errors": {
             "$ref": "#/components/schemas/ErrorResponse400DriverRegister_errors"
+          }
+        }
+      },
+      "ErrorResponse409DriverRegister": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Email already exists"
+              }
+            }
           }
         }
       },

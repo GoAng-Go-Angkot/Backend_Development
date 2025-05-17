@@ -34,10 +34,12 @@ try {
       ('02', '107.9152', '-6.8404', '108.1384', '-6.8624', 'Ciakar - Cimalaka - Paseh - Tomo'),
       ('03', '107.9152', '-6.8404', '107.7667', '-6.8647', 'Sumedang - Tanjungsari (via Cadas Pangeran)'),
       ('04', '107.7656', '-6.9317', '107.9152', '-6.8404', 'Cileunyi (Kab. Bandung) - Jatinangor - Sumedang'),
+      ('05', '107.7656', '-6.9317', '107.9152', '-6.8404', 'Cileunyi (Kab. Bandung) - Jatinangor - Sumedang'),
       ('06', '107.9152', '-6.8404', '108.0068', '-6.7450', 'Ciakar - Ganeas - Situraja - Cisitu'),
       ('07', '107.9152', '-6.8404', '107.9048', '-6.8521', 'Terminal Ciakar - Padasuka (via Alun-Alun )Sumedang'),
       ('08', '107.9152', '-6.8404', '107.7667', '-6.8647', 'Ciakar - Rancakalong - Pamulihan - Tanjungsari'),
-      ('09', '107.9152', '-6.8404', '108.1250', '-6.7478', 'Ciakar - Cimalaka - Paseh - Conggeang - Hariang (Buah Dua)');
+      ('09', '107.9152', '-6.8404', '108.1250', '-6.7478', 'Ciakar - Cimalaka - Paseh - Conggeang - Hariang (Buah Dua)'),
+      ('10', '107.9152', '-6.8404', '108.1250', '-6.7478', 'Ciakar - Cimalaka - Paseh - Conggeang - Hariang (Buah Dua)');
   `
   await pgClient.query(insertRouteSql);
 

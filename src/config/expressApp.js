@@ -2,6 +2,8 @@ import express from "express"
 import fs from 'fs/promises'
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors'
+import errorHandler from "../middleware/error-handler.js";
+import driverRoute from "../route/driverRoute.js";
 
 // express instance
 const app = express()
@@ -12,6 +14,12 @@ app.use(cors())
 
 // add functionality
 app.use(express.json())
+
+// add route
+app.use('/api/driver', driverRoute)
+
+// error handler
+app.use(errorHandler)
 
 // api docs
 const apiDocs = JSON.parse(await fs.readFile('./api-docs.json'))

@@ -1,21 +1,19 @@
 Project project_name {
   database_type: 'PostgreSQL'
-  Note: 'Capstone project PMPL'
+  Note: 'Goang API DB'
 }
 
 Table driver {
-  id integer [pk, not null, increment]
+  email varchar(70) [pk, not null]
   username varchar(50) [not null]
-  email varchar(70) [not null]
   password varchar(100) [not null]
   img_url varchar(120)
-  route route_number
+  route route_number [not null]
 }
 
-Table user {
-  id integer [pk, not null, increment]
+Table client {
   username varchar(50) [not null]
-  email varchar(70) [not null]
+  email varchar(70) [pk, not null]
   password varchar(100) [not null]
   img_url varchar(120)
 }
