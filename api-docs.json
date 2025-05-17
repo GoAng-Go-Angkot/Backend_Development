@@ -95,7 +95,6 @@
         "summary": "Log in a driver",
         "operationId": "loginDriver",
         "requestBody": {
-          "description": "Driver login credentials",
           "content": {
             "application/json": {
               "schema": {
@@ -106,7 +105,7 @@
           "required": true
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Driver successfully logged in",
             "content": {
               "application/json": {
@@ -122,6 +121,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse400Login"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Driver not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse404Login"
                 }
               }
             }
@@ -716,6 +725,20 @@
         "properties": {
           "errors": {
             "$ref": "#/components/schemas/ErrorResponse400Login_errors"
+          }
+        }
+      },
+      "ErrorResponse404Login": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Driver not found"
+              }
+            }
           }
         }
       },

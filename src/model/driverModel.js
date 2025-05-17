@@ -13,6 +13,14 @@ const driverModel = {
   insert: async data => {
     const hashPassword = await bcrypt.hash(data.password, 12)
     await pgClient.query(`INSERT INTO driver (username, email, password, route) VALUES ('${data.username}', '${data.email}', '${hashPassword}', '${data.route}')`)
+  },
+
+  getDriver: async email => {
+    const result = await pgClient.query(`SELECT * FROM driver WHERE email = '${email}'`)
+    if(result.rowCount === 0) {
+      throw new DatabaseError('Driver not found', 'not_found')
+    }
+    return result.rows[0]
   }
 }
 

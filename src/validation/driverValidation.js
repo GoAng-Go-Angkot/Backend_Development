@@ -8,6 +8,10 @@ const driverValidation = {
     route: Joi.string().valid('01', '02', '03', '04', '05', '06', '07', '08', '09', '10').trim().required(),
   }),
 
+  login: Joi.object({
+    email: Joi.string().max(100).email().trim().required(),
+    password: Joi.string().min(8).trim().required(),
+  }),
 }
 
 export default driverValidation

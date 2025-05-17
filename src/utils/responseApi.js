@@ -21,6 +21,14 @@ const responseApi = {
       }
     })
   },
+  
+  notFound: (res, message) => {
+    res.status(404).json({
+      error: {
+        message
+      }
+    })
+  },
 
   error: (res, message) => {
     res.status(500).json({

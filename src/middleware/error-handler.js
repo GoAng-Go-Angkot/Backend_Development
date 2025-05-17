@@ -11,6 +11,10 @@ const errorHandler = (err, req, res, next) => {
     if(err.type === 'conflict') {
       return responseApi.conflict(res, err.message)
     }
+
+    if(err.type === 'not_found') {
+      return responseApi.notFound(res, err.message)
+    }
   }
 
   return responseApi.error(res, err.message)
