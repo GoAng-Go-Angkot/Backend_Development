@@ -5,7 +5,7 @@ import { verifyTokenClient } from "../utils/jwtHelper.js";
 const cekClient = (req, res, next) => {
   try {
     // get token
-    let token = req.headers.authorization;
+    let token = req.headers.authorization || '';
     token = token.split(' ')[1];
     if(!token) {
       throw new ValidationError("Authentication token is missing or invalid", []);

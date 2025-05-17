@@ -5,6 +5,7 @@ import cors from 'cors'
 import errorHandler from "../middleware/error-handler.js";
 import driverRoute from "../route/driverRoute.js";
 import clientRoute from "../route/clientRoute.js";
+import routeRoute from "../route/routeRoute.js";
 
 // express instance
 const app = express()
@@ -19,6 +20,7 @@ app.use(express.json())
 // add route
 app.use('/api/driver', driverRoute)
 app.use('/api/client', clientRoute)
+app.use('/api/route', routeRoute)
 
 // error handler
 app.use(errorHandler)

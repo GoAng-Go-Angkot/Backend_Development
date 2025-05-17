@@ -21,8 +21,8 @@
       "description": "Operations related to clients (users)"
     },
     {
-      "name": "Angkot",
-      "description": "Operations related to Angkot data"
+      "name": "Route",
+      "description": "Operations related to angkot route"
     }
   ],
   "paths": {
@@ -449,10 +449,10 @@
         ]
       }
     },
-    "/angkot": {
+    "/route": {
       "get": {
         "tags": [
-          "Angkot"
+          "Route"
         ],
         "summary": "Get Angkot data (routes and numbers)",
         "operationId": "getAngkotData",
@@ -467,8 +467,47 @@
               }
             }
           },
+          "400": {
+            "description": "Invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid token"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
           "401": {
-            "description": "Unauthorized - Authentication token is missing or invalid"
+            "description": "Unauthorized token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid token"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
             "description": "Internal server error",
@@ -674,15 +713,39 @@
       "Angkot": {
         "type": "object",
         "properties": {
-          "noAngkot": {
+          "number": {
             "type": "string",
-            "example": "D05"
+            "example": "03"
           },
-          "rute": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/RoutePoint"
+          "start_base": {
+            "type": "object",
+            "properties": {
+              "long": {
+                "type": "number",
+                "example": "06.8456"
+              },
+              "lat": {
+                "type": "string",
+                "example": "-6.2088"
+              }
             }
+          },
+          "end_base": {
+            "type": "object",
+            "properties": {
+              "long": {
+                "type": "number",
+                "example": "06.8456"
+              },
+              "lat": {
+                "type": "string",
+                "example": "-6.2088"
+              }
+            }
+          },
+          "description": {
+            "type": "string",
+            "example": "lorem ipsum dolor amet"
           }
         }
       },
