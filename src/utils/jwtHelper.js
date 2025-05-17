@@ -1,15 +1,15 @@
 import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '../config/env.js';
+import { JWT_SECRET_DRIVER } from '../config/env.js';
 
-export function generateToken(email, route) {
-  return jwt.sign({email, route}, JWT_SECRET, {
+export function generateTokenDriver(email, route) {
+  return jwt.sign({email, route}, JWT_SECRET_DRIVER, {
     expiresIn: '30days',
     algorithm: 'HS384'
   });
 }
 
-export function verifyToken(token) {
-  return jwt.verify(token, JWT_SECRET, {
+export function verifyTokenDriver(token) {
+  return jwt.verify(token, JWT_SECRET_DRIVER, {
     algorithms: ['HS384']
   });
 }

@@ -5,10 +5,12 @@ const responseApi = {
 
   badRequest: (res, message, details) => {
     const response = {
-      message
+      error: {
+        message
+      }
     }
     for(const detail of details) {
-      response[detail.context.label] = [detail.message]
+      response.error[detail.context.label] = [detail.message]
     }
     res.status(400)
     res.json(response)
@@ -24,6 +26,14 @@ const responseApi = {
   
   notFound: (res, message) => {
     res.status(404).json({
+      error: {
+        message
+      }
+    })
+  },
+  
+  unAutorized: (res, message) => {
+    res.status(401).json({
       error: {
         message
       }

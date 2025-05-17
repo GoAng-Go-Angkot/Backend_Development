@@ -1,6 +1,6 @@
 import ValidationError from "../exception/ValidationError.js"
 import driverModel from "../model/driverModel.js"
-import { generateToken } from "../utils/jwtHelper.js"
+import { generateTokenDriver } from "../utils/jwtHelper.js"
 import responseApi from "../utils/responseApi.js"
 import driverValidation from "../validation/driverValidation.js"
 import validate from "../validation/validate.js"
@@ -45,7 +45,7 @@ const driverController = {
       }
 
       // generate token
-      const token = generateToken(driver.email, driver.route)
+      const token = generateTokenDriver(driver.email, driver.route)
 
       // response
       const response = {
@@ -54,6 +54,25 @@ const driverController = {
         }
       }
       return responseApi.success(res, response, 200)
+    } catch(err) {
+      next(err)
+    }
+  },
+
+  getProfile: async (req, res, next) => {
+    try {
+      // get driver data
+      const driver = await driverModel.getDriver(req.email)
+
+      // response
+      return res.json({
+        data: {
+          email: driver.email,
+          username: driver.username,
+          img_url: driver.img_url,
+          route: driver.route
+        }
+      })
     } catch(err) {
       next(err)
     }
