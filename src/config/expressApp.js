@@ -4,6 +4,7 @@ import swaggerUi from 'swagger-ui-express';
 import cors from 'cors'
 import errorHandler from "../middleware/error-handler.js";
 import driverRoute from "../route/driverRoute.js";
+import clientRoute from "../route/clientRoute.js";
 
 // express instance
 const app = express()
@@ -17,6 +18,7 @@ app.use(express.json())
 
 // add route
 app.use('/api/driver', driverRoute)
+app.use('/api/client', clientRoute)
 
 // error handler
 app.use(errorHandler)

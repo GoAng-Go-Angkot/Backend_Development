@@ -235,7 +235,6 @@
         "summary": "Register a new client",
         "operationId": "registerClient",
         "requestBody": {
-          "description": "Client registration details",
           "content": {
             "application/json": {
               "schema": {
@@ -266,6 +265,27 @@
               }
             }
           },
+          "409": {
+            "description": "Email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Email already exists"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
           "500": {
             "description": "Internal server error",
             "content": {
@@ -287,7 +307,6 @@
         "summary": "Log in a client",
         "operationId": "loginClient",
         "requestBody": {
-          "description": "Client login credentials",
           "content": {
             "application/json": {
               "schema": {
@@ -314,6 +333,27 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse400Login"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Email not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Email not found"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -349,46 +389,47 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized - Authentication token is missing or invalid"
-          },
-          "500": {
-            "description": "Internal server error",
+          "400": {
+            "description": "Invalid token",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse500"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "Client"
-        ],
-        "summary": "Log out the current client",
-        "operationId": "logoutClient",
-        "responses": {
-          "200": {
-            "description": "Client successfully logged out",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "example": "ok"
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid token"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
           },
           "401": {
-            "description": "Unauthorized - Authentication token is missing or invalid"
+            "description": "Unauthorized, token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid token"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
             "description": "Internal server error",
@@ -547,12 +588,12 @@
       "ClientRegisterRequest": {
         "required": [
           "email",
-          "name",
+          "username",
           "password"
         ],
         "type": "object",
         "properties": {
-          "name": {
+          "username": {
             "type": "string",
             "example": "John Doe"
           },
@@ -797,18 +838,19 @@
       "ClientProfileResponse_data": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "example": "John Doe"
-          },
           "email": {
             "type": "string",
             "format": "email",
             "example": "john.doe@example.com"
           },
-          "noAngkot": {
+          "username": {
             "type": "string",
-            "nullable": true
+            "example": "John Doe"
+          },
+          "img_url": {
+            "type": "string",
+            "nullable": true,
+            "example": "https://..."
           }
         }
       },
@@ -906,7 +948,7 @@
     "securitySchemes": {
       "BearerAuth": {
         "type": "http",
-        "description": "Enter the token with the `Bearer: ` prefix, e.g. 'Bearer abcde12345'",
+        "description": "Enter token",
         "scheme": "bearer",
         "bearerFormat": "JWT"
       }
