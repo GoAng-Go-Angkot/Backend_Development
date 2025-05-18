@@ -1,0 +1,43 @@
+Project project_name {
+  database_type: 'PostgreSQL'
+  Note: 'Goang API DB'
+}
+
+Table driver {
+  email varchar(70) [pk, not null]
+  username varchar(50) [not null]
+  password varchar(100) [not null]
+  img_url varchar(120)
+  route route_number [not null]
+}
+
+Table client {
+  username varchar(50) [not null]
+  email varchar(70) [pk, not null]
+  password varchar(100) [not null]
+  img_url varchar(120)
+}
+
+enum route_number {
+  "01"
+  "02"
+  "03"
+  "04"
+  "05"
+  "06"
+  "07"
+  "08"
+  "09"
+  "10"
+}
+
+Table route {
+  route_num route_number [pk, not null]
+  start_base_long varchar(30)
+  start_base_lat varchar(30)
+  end_base_long varchar(30)
+  end_base_lat varchar(30)
+  description varchar(400)
+}
+
+Ref : route.route_num < driver.route

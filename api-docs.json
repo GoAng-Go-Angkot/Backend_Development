@@ -1,0 +1,1020 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Goang API",
+    "description": "API for managing driver and client registration, login, profile, logout, driver status updates, and retrieving Angkot data.",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api",
+      "description": "Development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Driver",
+      "description": "Operations related to drivers"
+    },
+    {
+      "name": "Client",
+      "description": "Operations related to clients (users)"
+    },
+    {
+      "name": "Route",
+      "description": "Operations related to angkot route"
+    }
+  ],
+  "paths": {
+    "/driver/register": {
+      "post": {
+        "tags": [
+          "Driver"
+        ],
+        "summary": "Register a new driver",
+        "operationId": "registerDriver",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverRegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Driver successfully registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverRegisterResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse400DriverRegister"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse409DriverRegister"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/driver/login": {
+      "post": {
+        "tags": [
+          "Driver"
+        ],
+        "summary": "Log in a driver",
+        "operationId": "loginDriver",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Driver successfully logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverLoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation or authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse400Login"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Driver not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse404Login"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/driver": {
+      "get": {
+        "tags": [
+          "Driver"
+        ],
+        "summary": "Get current driver's profile",
+        "operationId": "getDriverProfile",
+        "responses": {
+          "200": {
+            "description": "Driver profile retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverProfileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Validation error"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Authentication token is missing or invalid"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse500"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/client/register": {
+      "post": {
+        "tags": [
+          "Client"
+        ],
+        "summary": "Register a new client",
+        "operationId": "registerClient",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientRegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Client successfully registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientRegisterResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse400ClientRegister"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Email already exists"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/client/login": {
+      "post": {
+        "tags": [
+          "Client"
+        ],
+        "summary": "Log in a client",
+        "operationId": "loginClient",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Client successfully logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientLoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation or authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse400Login"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Email not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Email not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/client": {
+      "get": {
+        "tags": [
+          "Client"
+        ],
+        "summary": "Get current client's profile",
+        "operationId": "getClientProfile",
+        "responses": {
+          "200": {
+            "description": "Client profile retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientProfileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid token"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized, token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid token"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse500"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/route": {
+      "get": {
+        "tags": [
+          "Route"
+        ],
+        "summary": "Get Angkot data (routes and numbers)",
+        "operationId": "getAngkotData",
+        "responses": {
+          "200": {
+            "description": "Angkot data retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AngkotDataResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid token"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid token"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse500"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DriverRegisterRequest": {
+        "required": [
+          "email",
+          "username",
+          "route",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "Budi Santoso"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "budi.driver@example.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "strongpassword123"
+          },
+          "route": {
+            "type": "string",
+            "example": "05"
+          }
+        }
+      },
+      "DriverRegisterResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/DriverRegisterResponse_data"
+          }
+        }
+      },
+      "DriverLoginRequest": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "budi.driver@example.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "strongpassword123"
+          }
+        }
+      },
+      "DriverLoginResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/DriverLoginResponse_data"
+          }
+        }
+      },
+      "DriverProfileResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/DriverProfileResponse_data"
+          }
+        }
+      },
+      "ErrorResponse400DriverRegister": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "$ref": "#/components/schemas/ErrorResponse400DriverRegister_errors"
+          }
+        }
+      },
+      "ErrorResponse409DriverRegister": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Email already exists"
+              }
+            }
+          }
+        }
+      },
+      "ClientRegisterRequest": {
+        "required": [
+          "email",
+          "username",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "john.doe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "strongpassword123"
+          }
+        }
+      },
+      "ClientRegisterResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ClientRegisterResponse_data"
+          }
+        }
+      },
+      "ClientLoginRequest": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "john.doe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "strongpassword123"
+          }
+        }
+      },
+      "ClientLoginResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/DriverLoginResponse_data"
+          }
+        }
+      },
+      "ClientProfileResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ClientProfileResponse_data"
+          }
+        }
+      },
+      "ErrorResponse400ClientRegister": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "$ref": "#/components/schemas/ErrorResponse400ClientRegister_errors"
+          }
+        }
+      },
+      "AngkotDataResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Angkot"
+            }
+          }
+        }
+      },
+      "Angkot": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "string",
+            "example": "03"
+          },
+          "start_base": {
+            "type": "object",
+            "properties": {
+              "long": {
+                "type": "number",
+                "example": "06.8456"
+              },
+              "lat": {
+                "type": "string",
+                "example": "-6.2088"
+              }
+            }
+          },
+          "end_base": {
+            "type": "object",
+            "properties": {
+              "long": {
+                "type": "number",
+                "example": "06.8456"
+              },
+              "lat": {
+                "type": "string",
+                "example": "-6.2088"
+              }
+            }
+          },
+          "description": {
+            "type": "string",
+            "example": "lorem ipsum dolor amet"
+          }
+        }
+      },
+      "RoutePoint": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number",
+            "format": "float",
+            "example": -6.2088
+          },
+          "long": {
+            "type": "number",
+            "format": "float",
+            "example": 106.8456
+          }
+        }
+      },
+      "ErrorResponse400Login": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "$ref": "#/components/schemas/ErrorResponse400Login_errors"
+          }
+        }
+      },
+      "ErrorResponse404Login": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Driver not found"
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponse404": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "$ref": "#/components/schemas/ErrorResponse404_errors"
+          }
+        }
+      },
+      "ErrorResponse500": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "$ref": "#/components/schemas/ErrorResponse500_errors"
+          }
+        }
+      },
+      "DriverRegisterResponse_data": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "budi.driver@example.com"
+          }
+        }
+      },
+      "DriverLoginResponse_data": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        }
+      },
+      "DriverProfileResponse_data": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "budi.driver@example.com"
+          },
+          "username": {
+            "type": "string",
+            "example": "Budi Santoso"
+          },
+          "img_url": {
+            "type": "string",
+            "example": "https://..."
+          },
+          "route": {
+            "type": "string",
+            "example": "05"
+          }
+        }
+      },
+      "ErrorResponse400DriverRegister_errors": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Validation failed"
+          },
+          "name": {
+            "type": "array",
+            "example": [
+              "The name field is required."
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "email": {
+            "type": "array",
+            "example": [
+              "The email must be a valid email address."
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "password": {
+            "type": "array",
+            "example": [
+              "The password must be at least 8 characters."
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "noAngkot": {
+            "type": "array",
+            "example": [
+              "The selected angkot number is invalid."
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ClientRegisterResponse_data": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "john.doe@example.com"
+          }
+        }
+      },
+      "ClientProfileResponse_data": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "john.doe@example.com"
+          },
+          "username": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "img_url": {
+            "type": "string",
+            "nullable": true,
+            "example": "https://..."
+          }
+        }
+      },
+      "ErrorResponse400ClientRegister_errors": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Validation failed"
+          },
+          "name": {
+            "type": "array",
+            "example": [
+              "The name field is required."
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "email": {
+            "type": "array",
+            "example": [
+              "The email must be a valid email address."
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "password": {
+            "type": "array",
+            "example": [
+              "The password must be at least 8 characters."
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ErrorResponse400Login_errors": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Invalid credentials"
+          },
+          "email": {
+            "type": "array",
+            "example": [
+              "These credentials do not match our records."
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "password": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ErrorResponse404_errors": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Resource not found"
+          }
+        }
+      },
+      "ErrorResponse500_errors": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "driverId": {
+        "name": "id",
+        "in": "path",
+        "description": "The ID of the driver",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "driver123"
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "description": "Enter token",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
