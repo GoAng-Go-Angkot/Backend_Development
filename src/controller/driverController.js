@@ -45,7 +45,7 @@ const driverController = {
       }
 
       // generate token
-      const token = generateTokenDriver(driver.email, driver.route)
+      const token = generateTokenDriver(driver.email, driver.route, driver.id)
 
       // response
       const response = {
