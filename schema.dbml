@@ -5,6 +5,7 @@ Project project_name {
 
 Table driver {
   email varchar(70) [pk, not null]
+  id integer [unique, not null, increment]
   username varchar(50) [not null]
   password varchar(100) [not null]
   img_url varchar(120)

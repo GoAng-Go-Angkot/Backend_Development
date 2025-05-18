@@ -6,6 +6,8 @@ import errorHandler from "../middleware/error-handler.js";
 import driverRoute from "../route/driverRoute.js";
 import clientRoute from "../route/clientRoute.js";
 import routeRoute from "../route/routeRoute.js";
+import http from 'http'
+import { attachWebSocket } from "./wsApp.js";
 
 // express instance
 const app = express()
@@ -31,5 +33,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(apiDocs, {
   customCss: '.swagger-ui .topbar { display: none }'
 }));
 
+// define web socket
+const expressServer = http.createServer(app);
+attachWebSocket(expressServer)
 
-export default app
+export default expressServer
