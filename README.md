@@ -117,11 +117,11 @@ Event : driver/location
 Format (json) :
 ```json
 {
-    token: string
-    isFull: boolean,
-    location: {
-        lat: number
-        long: number
+    "token": "string",
+    "isFull": false,
+    "location": {
+        "lat": 38.8951,
+        "long": -77.0364 
     }
 }
 ```
@@ -145,11 +145,11 @@ Available Event :
 Received Data (json) : 
 ```json
 {
-    driverId: string
-    isFull: boolean,
-    location: {
-        lat: number
-        long: number
+    "driverId": "string",
+    "isFull": false,
+    "location": {
+        "lat": 38.8951,
+        "long": -77.0364
     }
 }
 ```
