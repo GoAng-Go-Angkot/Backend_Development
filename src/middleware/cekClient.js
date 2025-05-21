@@ -1,8 +1,9 @@
 import AuthError from "../exception/AuthError.js";
 import ValidationError from "../exception/ValidationError.js";
+import clientModel from "../model/clientModel.js";
 import { verifyTokenClient } from "../utils/jwtHelper.js";
 
-const cekClient = (req, res, next) => {
+const cekClient = async (req, res, next) => {
   try {
     // get token
     let token = req.headers.authorization || '';
@@ -15,6 +16,11 @@ const cekClient = (req, res, next) => {
     let client
     try {
       client = verifyTokenClient(token)
+      try {
+        await clientModel.checkToken(token)
+      } catch(err) {
+        throw new Error('Token not found')
+      }
     } catch(err) {
       throw new AuthError("Authentication token is invalid")
     }
