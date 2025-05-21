@@ -19,6 +19,18 @@ Table client {
   img_url varchar(120)
 }
 
+Table driver_session {
+  id integer [pk, not null, increment]
+  email varchar(70) [not null]
+  token varchar(250) [not null]
+}
+
+Table client_session {
+  id integer [pk, not null, increment]
+  email varchar(70) [not null]
+  token varchar(250) [not null]
+}
+
 enum route_number {
   "01"
   "02"
@@ -42,3 +54,5 @@ Table route {
 }
 
 Ref : route.route_num < driver.route
+Ref : driver.email < driver_session.email
+Ref : client.email < client_session.email
