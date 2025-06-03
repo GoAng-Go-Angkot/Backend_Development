@@ -30,13 +30,6 @@ app.use(errorHandler)
 // api docs
 const apiDocs = JSON.parse(await fs.readFile('./api-docs.json'))
 app.use('/api-docs', swaggerUi.serve, (req, res, next) => {
-  const fullUrl = `${req.protocol}://${req.get('host')}/api`;
-  apiDocs.servers = [
-    {
-      url: fullUrl,
-      description: "Dev server"
-    }
-  ]
   swaggerUi.setup(apiDocs, {
     customCss: '.swagger-ui .topbar { display: none }'
   })(req, res, next)
