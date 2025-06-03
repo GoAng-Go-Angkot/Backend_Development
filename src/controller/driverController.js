@@ -47,6 +47,12 @@ const driverController = {
       // generate token
       const token = generateTokenDriver(driver.email, driver.route, driver.id)
 
+      // insert token to db
+      await driverModel.insertToken({
+        email: driver.email,
+        token
+      })
+
       // response
       const response = {
         data: {
@@ -73,6 +79,30 @@ const driverController = {
           route: driver.route
         }
       })
+    } catch(err) {
+      next(err)
+    }
+  },
+
+  logout: async (req, res, next) => {
+    try {
+      // get token
+      let token = req.headers.authorization || '';
+      token = token.split(' ')[1];
+      if(!token) {
+        throw new ValidationError("Authentication token is missing or invalid", []);
+      }
+
+      // check token in db
+      await driverModel.checkToken(token)
+
+      // delete token in db
+      await driverModel.deleteToken(token)
+
+      // response
+      return responseApi.success(res, {
+        message: "Logout success"
+      }, 200)
     } catch(err) {
       next(err)
     }

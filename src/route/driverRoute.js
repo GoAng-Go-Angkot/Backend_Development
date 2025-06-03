@@ -7,5 +7,6 @@ const driverRoute = express.Router()
 driverRoute.post('/register', driverController.register)
 driverRoute.post('/login', driverController.login)
 driverRoute.get('/', cekDriver, driverController.getProfile)
+driverRoute.delete('/logout', driverController.logout)
 
 export default driverRoute

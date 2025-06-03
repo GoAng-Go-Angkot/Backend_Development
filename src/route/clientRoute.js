@@ -7,5 +7,6 @@ const clientRoute = express.Router()
 clientRoute.post('/register', clientController.register)
 clientRoute.post('/login', clientController.login)
 clientRoute.get('/', cekClient, clientController.getProfile)
+clientRoute.delete('/logout', clientController.logout)
 
 export default clientRoute

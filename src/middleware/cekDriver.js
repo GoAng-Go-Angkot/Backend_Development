@@ -1,8 +1,9 @@
 import AuthError from "../exception/AuthError.js";
 import ValidationError from "../exception/ValidationError.js";
+import driverModel from "../model/driverModel.js";
 import { verifyTokenDriver } from "../utils/jwtHelper.js";
 
-const cekDriver = (req, res, next) => {
+const cekDriver = async (req, res, next) => {
   try {
     // get token
     let token = req.headers.authorization || '';
@@ -15,6 +16,11 @@ const cekDriver = (req, res, next) => {
     let driver
     try {
       driver = verifyTokenDriver(token)
+      try {
+        await driverModel.checkToken(token)
+      } catch(err) {
+        throw new Error('Token not found')
+      }
     } catch(err) {
       throw new AuthError("Authentication token is invalid")
     }

@@ -47,6 +47,12 @@ const clientController = {
       // generate token
       const token = generateTokenClient(client.email)
 
+      // insert token to db
+      await clientModel.insertToken({
+        email: client.email,
+        token
+      })
+
       // response
       const response = {
         data: {
@@ -71,6 +77,30 @@ const clientController = {
           username: client.username,
           img_url: client.img_url,
         }
+      })
+    } catch(err) {
+      next(err)
+    }
+  },
+
+  logout: async (req, res, next) => {
+    try {
+      // get token
+      let token = req.headers.authorization || '';
+      token = token.split(' ')[1];
+      if(!token) {
+        throw new ValidationError("Authentication token is missing or invalid", []);
+      }
+
+      // check token in db
+      await clientModel.checkToken(token)
+
+      // delete token in db
+      await clientModel.deleteToken(token)
+
+      // response
+      return responseApi.success(res, {
+        message: "Logout success"
       })
     } catch(err) {
       next(err)
