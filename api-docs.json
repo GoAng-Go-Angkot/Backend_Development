@@ -9,6 +9,10 @@
     {
       "url": "http://35.219.117.53/api",
       "description": "Development server"
+    },
+    {
+      "url": "http://35.219.117.53/api",
+      "description": "Development server"
     }
   ],
   "tags": [
