@@ -5,16 +5,7 @@
     "description": "API for managing driver and client registration, login, profile, logout, driver status updates, and retrieving Angkot data.",
     "version": "1"
   },
-  "servers": [
-    {
-      "url": "http://35.219.117.53/api",
-      "description": "Development server"
-    },
-    {
-      "url": "http://35.219.117.53/api",
-      "description": "Development server"
-    }
-  ],
+  "servers": [],
   "tags": [
     {
       "name": "Driver",

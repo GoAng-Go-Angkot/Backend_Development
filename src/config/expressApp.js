@@ -8,6 +8,7 @@ import clientRoute from "../route/clientRoute.js";
 import routeRoute from "../route/routeRoute.js";
 import http from 'http'
 import { attachWebSocket } from "./wsApp.js";
+import { LIVE_URL } from "./env.js";
 
 // express instance
 const app = express()
@@ -29,7 +30,17 @@ app.use(errorHandler)
 
 // api docs
 const apiDocs = JSON.parse(await fs.readFile('./api-docs.json'))
-app.use('/api-docs', swaggerUi.serve, (req, res, next) => {
+app.use('/', swaggerUi.serve, (req, res, next) => {
+  apiDocs.servers = [
+    {
+      url: LIVE_URL,
+      description: "Live server"
+    },
+    {
+      url: 'http://localhost:3000/api',
+      description: "Dev server"
+    }
+  ]
   swaggerUi.setup(apiDocs, {
     customCss: '.swagger-ui .topbar { display: none }'
   })(req, res, next)
