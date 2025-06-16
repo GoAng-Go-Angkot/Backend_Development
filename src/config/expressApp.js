@@ -30,7 +30,7 @@ app.use(errorHandler)
 
 // api docs
 const apiDocs = JSON.parse(await fs.readFile('./api-docs.json'))
-app.use('/', swaggerUi.serve, (req, res, next) => {
+app.use('/api-docs', swaggerUi.serve, (req, res, next) => {
   apiDocs.servers = [
     {
       url: LIVE_URL,
