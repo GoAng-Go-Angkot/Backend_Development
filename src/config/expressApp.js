@@ -35,22 +35,40 @@ app.use('/api/route', routeRoute)
 app.use(errorHandler)
 
 // api docs
+const docsRouter = express.Router()
 const apiDocs = JSON.parse(await fs.readFile('./api-docs.json'))
-app.use('/api-docs', swaggerUi.serve, (req, res, next) => {
-  apiDocs.servers = [
-    {
-      url: LIVE_URL,
-      description: "Live server"
-    },
-    {
-      url: 'http://localhost:3000/api',
-      description: "Dev server"
-    }
-  ]
-  swaggerUi.setup(apiDocs, {
-    customCss: '.swagger-ui .topbar { display: none }'
-  })(req, res, next)
-});
+apiDocs.servers = [
+  {
+    url: LIVE_URL,
+    description: "Live server"
+  },
+  {
+    url: 'http://localhost:3000/api',
+    description: "Dev server"
+  }
+]
+docsRouter.use('/api-docs', swaggerUi.serve);
+docsRouter.get('/api-docs', swaggerUi.setup(apiDocs, {
+  customCss: '.swagger-ui .topbar { display: none }'
+}));
+app.use(docsRouter)
+
+// const apiDocs = JSON.parse(await fs.readFile('./api-docs.json'))
+// app.get('/api-docs', swaggerUi.serve, (req, res, next) => {
+//   apiDocs.servers = [
+//     {
+//       url: LIVE_URL,
+//       description: "Live server"
+//     },
+//     {
+//       url: 'http://localhost:3000/api',
+//       description: "Dev server"
+//     }
+//   ]
+//   swaggerUi.setup(apiDocs, {
+//     customCss: '.swagger-ui .topbar { display: none }'
+//   })(req, res, next)
+// });
 
 // define web socket
 const expressServer = http.createServer(app);
