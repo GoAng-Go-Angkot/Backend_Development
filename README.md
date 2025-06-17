@@ -108,9 +108,6 @@ Url :
 - http://localhost (Client)
 - http://localhost/driver (Driver)
 
-Header : 
-- authorization : token
-
 
 #### 2. Publish Location (Driver)
 Event : driver/location

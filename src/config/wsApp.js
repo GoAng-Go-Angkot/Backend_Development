@@ -1,11 +1,12 @@
 import { Server } from 'socket.io';
 import { checkConnectClient, checkConnectDriver } from '../middleware/checkWsConnection.js';
 import driverWsListener from '../ws_listener/driverWsListener.js';
+import clientWsListener from '../ws_listener/clientWsListener.js';
 
 let wsApp
 
 const attachWebSocket = (server) => {
-  // ws instance
+  // client ws instance
   wsApp = new Server(server, {
     cors: {
       origin: "*",
@@ -15,13 +16,16 @@ const attachWebSocket = (server) => {
     connectionStateRecovery: {}
   });
   
-  // middleware check connect client
+  // client middleware check connect
   // wsApp.use(checkConnectClient);
+
+  // client listener
+  wsApp.on('connection', clientWsListener);
 
   // driver ws instance
   const wsServerDriver = wsApp.of('/driver');
 
-  // middleware check connect driver
+  // driver middleware check connect
   // wsServerDriver.use(checkConnectDriver);
 
   // driver listener

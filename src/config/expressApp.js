@@ -9,6 +9,7 @@ import routeRoute from "../route/routeRoute.js";
 import http from 'http'
 import { attachWebSocket } from "./wsApp.js";
 import { LIVE_URL } from "./env.js";
+import morgan from 'morgan'
 
 // express instance
 const app = express()
@@ -19,6 +20,11 @@ app.use(cors())
 
 // add functionality
 app.use(express.json())
+
+// add logger
+app.use(morgan('tiny', {
+  immediate: true
+}))
 
 // add route
 app.use('/api/driver', driverRoute)

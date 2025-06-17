@@ -7,18 +7,12 @@ const routeController = {
       // get route data
       let routes = await routeModel.getRoutes()
 
+      // parse
       routes = routes.map(e => {
         return ({
           number: e.route_num,
-          start_base: {
-            long: e.start_base_long,
-            lat: e.start_base_lat
-          },
-          end_base: {
-            long: e.end_base_long,
-            lat: e.end_base_lat
-          },
-          description: e.description
+          description: e.description,
+          point: e.route_point
         })
       })
 

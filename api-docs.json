@@ -886,35 +886,25 @@
             "type": "string",
             "example": "03"
           },
-          "start_base": {
-            "type": "object",
-            "properties": {
-              "long": {
-                "type": "number",
-                "example": "06.8456"
-              },
-              "lat": {
-                "type": "string",
-                "example": "-6.2088"
-              }
-            }
-          },
-          "end_base": {
-            "type": "object",
-            "properties": {
-              "long": {
-                "type": "number",
-                "example": "06.8456"
-              },
-              "lat": {
-                "type": "string",
-                "example": "-6.2088"
-              }
-            }
-          },
           "description": {
             "type": "string",
             "example": "lorem ipsum dolor amet"
+          },
+          "point": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "lat": {
+                  "type": "number",
+                  "example": -6.2088
+                },
+                "long": {
+                  "type": "number",
+                  "example": 106.8456
+                }
+              }
+            }
           }
         }
       },

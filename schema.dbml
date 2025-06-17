@@ -46,11 +46,8 @@ enum route_number {
 
 Table route {
   route_num route_number [pk, not null]
-  start_base_long varchar(30)
-  start_base_lat varchar(30)
-  end_base_long varchar(30)
-  end_base_lat varchar(30)
   description varchar(400)
+  route_point JSONB
 }
 
 Ref : route.route_num < driver.route

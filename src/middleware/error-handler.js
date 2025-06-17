@@ -22,6 +22,8 @@ const errorHandler = (err, req, res, next) => {
     return responseApi.unAutorized(res, err.message)
   }
 
+  console.log(err.message);
+
   return responseApi.error(res, err.message)
 }
 
