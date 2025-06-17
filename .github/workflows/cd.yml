@@ -18,6 +18,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.SSH_PORT }}
         script: |
+          source ~/.bashrc
           cd ~/Backend_Development
           git pull
           npm install
